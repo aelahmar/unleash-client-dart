@@ -7,8 +7,7 @@ import 'package:unleash/src/proxy/unleash_proxy_settings.dart';
 import 'package:unleash/src/toggle_backup/_web_toggle_backup.dart';
 import 'package:unleash/src/toggle_backup/toggle_backup.dart';
 import 'package:unleash/src/toggles.dart';
-
-typedef UpdateCallback = void Function();
+import 'package:unleash/src/unleash.dart';
 
 class UnleashProxy {
   UnleashProxy._internal(
