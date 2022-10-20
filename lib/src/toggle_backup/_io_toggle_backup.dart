@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:unleash/src/features.dart';
 import 'package:unleash/src/toggle_backup/toggle_backup.dart';
+import 'package:unleash/src/toggles.dart';
 
 ToggleBackup create(String backupFilePath) {
   assert(
@@ -44,6 +46,41 @@ class IOToggleBackup implements ToggleBackup {
     } catch (e, stacktrace) {
       log(
         'An exception occured during saving toggles to disk',
+        stackTrace: stacktrace,
+        error: e,
+        name: 'unleash',
+      );
+    }
+    return null;
+  }
+
+  @override
+  Future<void> saveToggles(Toggles toggles) async {
+    try {
+      await File(backupFilePath).writeAsString(json.encode(toggles.toJson()));
+    } catch (e, stacktrace) {
+      log(
+        'An exception occurred during saving toggles to disk',
+        stackTrace: stacktrace,
+        error: e,
+        name: 'unleash',
+      );
+    }
+  }
+
+  @override
+  Future<Toggles?> loadToggles() async {
+    try {
+      final backupFile = File(backupFilePath);
+      if (await backupFile.exists()) {
+        final jsonString = await backupFile.readAsString();
+        return Toggles.fromJson(
+          json.decode(jsonString) as Map<String, dynamic>,
+        );
+      }
+    } catch (e, stacktrace) {
+      log(
+        'An exception occurred during loading toggles from disk',
         stackTrace: stacktrace,
         error: e,
         name: 'unleash',

@@ -1,4 +1,6 @@
 import 'package:unleash/src/features.dart';
+import 'package:unleash/src/toggles.dart';
+
 import '_io_toggle_backup.dart' if (dart.library.html) '_web_toggle_backup.dart'
     as toggle_backup;
 
@@ -14,4 +16,7 @@ abstract class ToggleBackup {
 
   Future<void> save(Features toggleJson);
   Future<Features?> load();
+
+  Future<void> saveToggles(Toggles togglesJson);
+  Future<Toggles?> loadToggles();
 }
