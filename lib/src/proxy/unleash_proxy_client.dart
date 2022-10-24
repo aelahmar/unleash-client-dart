@@ -50,4 +50,14 @@ class UnleashProxyClient {
       return null;
     }
   }
+
+  UnleashProxyClient updateProxyContext({
+    required ProxyContext context,
+  }) {
+    return UnleashProxyClient(
+      client: _client,
+      settings: _settings,
+      context: context,
+    );
+  }
 }
