@@ -13,6 +13,7 @@ class UnleashProxy {
   UnleashProxy._internal(
     this.settings,
     this._onUpdate,
+    this.context,
     this._unleashClient,
     ToggleBackup? toggleBackup,
   ) : _backupRepository = toggleBackup ?? NoOpToggleBackup();
@@ -48,6 +49,7 @@ class UnleashProxy {
     final unleash = UnleashProxy._internal(
       settings,
       onUpdate,
+      context,
       client ??
           UnleashProxyClient(
             context: context,
@@ -67,6 +69,7 @@ class UnleashProxy {
   Future<void> updateProxyContext(ProxyContext context) async {
     _togglePollingTimer?.cancel();
 
+    this.context = context;
     _unleashClient = _unleashClient.updateProxyContext(context: context);
 
     await _loadToggles();
